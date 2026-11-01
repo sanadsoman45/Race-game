@@ -1,0 +1,61 @@
+<main class="landing">
+  <header><span class="wordmark">Grand Prix</span></header>
+
+  <section class="hero">
+    <div class="copy">
+      <p class="eyebrow">Single player · 3 laps · 1 rival</p>
+      <h1>Beat the machine.</h1>
+      <p class="lede">One circuit. One computer-driven rival. Hold your line and take the flag.</p>
+      <a
+        class="play"
+        [routerLink]="canPlay() ? '/race' : null"
+        [queryParams]="canPlay() ? { car: selected().id } : null"
+        [class.disabled]="!canPlay()"
+        [attr.aria-disabled]="!canPlay()"
+        (click)="!canPlay() && $event.preventDefault()"
+      >
+        Play
+      </a>
+    </div>
+
+    <div class="showcase">
+      @if (!playerService.player()) {
+        <app-player-registration />
+      } @else {
+        <app-hero-scene [car]="selected()" />
+        <div class="picker">
+          <button type="button" aria-label="Previous car" (click)="step(-1)">‹</button>
+          <div class="info" aria-live="polite">
+            <span class="era">{{ selected().era }}</span>
+            <strong class="name">{{ selected().name }}</strong>
+          </div>
+          <button type="button" aria-label="Next car" (click)="step(1)">›</button>
+        </div>
+
+        <div class="dots">
+          @for (c of cars; track c.id; let i = $index) {
+            <button
+              type="button"
+              class="dot"
+              [class.active]="i === selectedIndex()"
+              [attr.aria-label]="c.name"
+              (click)="selectedIndex.set(i)"
+            ></button>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="controls" aria-label="Controls">
+    @for (c of controls; track c.action) {
+      <div>
+        @for (k of c.keys; track k) {
+          <kbd>{{ k }}</kbd>
+        }
+        <span>{{ c.action }}</span>
+      </div>
+    }
+    <button type="button" class="credits-link" (click)="openCredits()">Credits</button>
+  </section>
+</main>

@@ -1,0 +1,50 @@
+<div class="registration">
+  <div class="registration-header">
+    <p class="eyebrow">GRAND PRIX <span>//</span> DRIVER REGISTRATION</p>
+
+    <h1>Every legend starts somewhere.</h1>
+
+    <p class="description">Choose your driver name before entering the grid.</p>
+  </div>
+
+  <form [formRoot]="form">
+    <div class="field-group">
+      <label for="playerName">DRIVER NAME</label>
+
+      <div class="input-wrapper" [class.invalid]="form.name().touched() && form.name().invalid()">
+        <span class="input-prefix">#</span>
+
+        <input
+          id="playerName"
+          type="text"
+          [formField]="form.name"
+          placeholder="Enter your driver name"
+          autocomplete="nickname"
+          spellcheck="false"
+        />
+
+        <span class="character-count"> {{ form.name().value().length }}/16 </span>
+      </div>
+
+      @if (form.name().touched() && form.name().invalid()) {
+        <div class="error">
+          {{ form.name().errors()[0].message }}
+        </div>
+      }
+
+      <p class="hint">3–16 characters · Letters, numbers, spaces, _ and -</p>
+    </div>
+
+    <button type="submit" class="submit-button">
+      <span>ENTER THE GRID</span>
+      <span class="arrow">→</span>
+    </button>
+  </form>
+
+  <div class="registration-footer">
+    <span>01</span>
+    <span>DRIVER IDENTITY</span>
+    <span class="footer-line"></span>
+    <span>GRAND PRIX</span>
+  </div>
+</div>

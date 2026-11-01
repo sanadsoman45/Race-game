@@ -1,0 +1,58 @@
+
+<div class="scene-container">
+
+  <canvas #canvas></canvas>
+
+  <div class="camera-hud">
+
+    <button
+      type="button"
+      class="camera-tab"
+      [class.active]="cameraPanelOpen()"
+      (click)="toggleCameraPanel()"
+      aria-label="Toggle camera controls"
+      [attr.aria-expanded]="cameraPanelOpen()"
+    >
+      <span class="camera-icon">◉</span>
+      <span>CAMERA</span>
+      <span class="chevron">
+        {{ cameraPanelOpen() ? '−' : '+' }}
+      </span>
+    </button>
+
+    @if (cameraPanelOpen()) {
+      <div class="camera-panel">
+
+        <span class="panel-label">
+          VIEW PERSPECTIVE
+        </span>
+
+        @for (view of cameraViews; track view) {
+          <button
+            type="button"
+            class="camera-option"
+            [class.active]="activeCamera() === view"
+            (click)="setCamera(view)"
+          >
+            {{ view | uppercase }}
+          </button>
+        }
+
+        <button
+          type="button"
+          class="reset-camera"
+          (click)="resetCamera()"
+        >
+          RESET VIEW
+        </button>
+
+      </div>
+    }
+
+  </div>
+
+  <div class="interaction-hint">
+    DRAG TO ROTATE · SCROLL TO ZOOM
+  </div>
+
+</div>

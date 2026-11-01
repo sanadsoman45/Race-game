@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Credits</h2>
+
+<mat-dialog-content>
+  <ul>
+    @for (c of credits(); track c.sourceUrl) {
+      <li>
+        <a
+          [href]="c.sourceUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ c.title }}
+        </a>
+
+        by {{ c.author }} is licensed under
+
+        <a
+          [href]="c.licenseUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ c.license }}
+        </a>.
+
+        @if (c.changes) {
+          <span class="changes">
+            Changes made: {{ c.changes }}
+          </span>
+        }
+      </li>
+    } @empty {
+      <li>No credits available.</li>
+    }
+  </ul>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button matButton mat-dialog-close>Close</button>
+</mat-dialog-actions>
